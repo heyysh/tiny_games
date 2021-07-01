@@ -3,16 +3,17 @@ import * as CardStyle from './CardStyle';
 type TCard = {
   idx: number;
   isOpen: boolean;
+  isMatch: boolean;
   char: string;
-  handleCardClick: (idx: number) => void;
+  handleCardClick: (idx: number, char: string) => void;
 }
 
 const Card = (props: TCard) => {
-  const { idx, isOpen, char, handleCardClick } = props;
+  const { idx, isOpen, isMatch, char, handleCardClick } = props;
 
   return (
-    <CardStyle.CardContainer isOpen={isOpen}>
-      <CardStyle.CardBody onClick={() => !isOpen && handleCardClick(idx)}>
+    <CardStyle.CardContainer isOpen={isOpen || isMatch}>
+      <CardStyle.CardBody onClick={() => !isOpen && handleCardClick(idx, char)}>
         <CardStyle.CardBack>?</CardStyle.CardBack>
         <CardStyle.CardFront>{char}</CardStyle.CardFront>
       </CardStyle.CardBody>
