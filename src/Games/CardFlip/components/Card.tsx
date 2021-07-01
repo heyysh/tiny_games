@@ -1,11 +1,16 @@
 import * as CardStyle from './CardStyle';
 
-const Card = () => {
+type TCard = {
+  frontChar: string,
+}
+
+const Card = (props: TCard) => {
+  const { frontChar } = props;
   return (
     <CardStyle.CardContainer>
       <CardStyle.CardBody>
         <CardStyle.CardBack>?</CardStyle.CardBack>
-        <CardStyle.CardFront>A</CardStyle.CardFront>
+        <CardStyle.CardFront>{frontChar}</CardStyle.CardFront>
       </CardStyle.CardBody>
     </CardStyle.CardContainer>
   );
