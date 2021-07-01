@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const CardContainer = styled.div`
   width: 150px;
-  height: 150px;
+  height: 175px;
   margin-top: 10px;
   perspective: 1000px;
   &:hover > div {
@@ -32,11 +32,11 @@ const CardBasic = styled.div`
 `;
 
 const CardBack = styled(CardBasic)`
-  background-color: #ff0000;
+  background-color: lightskyblue;
 `;
 
 const CardFront = styled(CardBasic)`
-  background-color: green;
+  background-color: lightseagreen;
   transform: rotateY(180deg);
 `;
 
