@@ -30,7 +30,6 @@ const CardBasic = styled.div`
   justify-content: center;
   align-items: center;
   font-weight: bold;
-  font-size: 72px;
   color: white;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -38,10 +37,12 @@ const CardBasic = styled.div`
 
 const CardBack = styled(CardBasic)`
   background-color: lightskyblue;
+  font-size: 84px;
 `;
 
 const CardFront = styled(CardBasic)`
   background-color: lightseagreen;
+  font-size: 72px;
   transform: rotateY(180deg);
 `;
 
