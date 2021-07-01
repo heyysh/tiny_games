@@ -1,12 +1,17 @@
 import styled from 'styled-components';
 
-const CardContainer = styled.div`
+type TContainerProps = {
+  isOpen: boolean;
+}
+
+const CardContainer = styled.div<TContainerProps>`
   width: 150px;
   height: 175px;
   margin-top: 10px;
   perspective: 1000px;
-  &:hover > div {
-    transform: rotateY(180deg);
+  cursor: ${props => !props.isOpen && 'pointer'};
+  & > div {
+    transform: ${props => props.isOpen && 'rotateY(180deg)'};
   }
 `
 const CardBody = styled.div`
