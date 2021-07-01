@@ -12,7 +12,7 @@ const Card = (props: TCard) => {
 
   return (
     <CardStyle.CardContainer isOpen={isOpen}>
-      <CardStyle.CardBody onClick={() => handleCardClick(idx)}>
+      <CardStyle.CardBody onClick={() => !isOpen && handleCardClick(idx)}>
         <CardStyle.CardBack>?</CardStyle.CardBack>
         <CardStyle.CardFront>{char}</CardStyle.CardFront>
       </CardStyle.CardBody>
