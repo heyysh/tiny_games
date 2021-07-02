@@ -10,28 +10,37 @@ type TCardListState = {
 }
 
 export default function CardFlip(): JSX.Element {
-  const pairNum = 5;
+  const pairNum = 6;
   const [cardList, setCardList] = useState<TCardListState[]>([]);
   const openingCard = useRef('');
+  const [avoidAllAction, setAvoidAllAction] = useState<boolean>(false);
 
-  const handleCardClick = (idx: number, char: string) => 
-    (openingCard.current === '')
-      ? handleFirstCardFlip(idx, char)
-      : handleSecondCardFlip(idx, char);
+  const handleCardClick = (idx: number, char: string) => {
+    const isFlipFirstCard = openingCard.current === '';
+    const isMatchFlip = char === openingCard.current;
+    openingCard.current = openingCard.current ? '' : char;
 
-  const handleFirstCardFlip = (idx: number, char: string) => {
+    handleCardOpen(idx);
+      
+    if (!isFlipFirstCard) {
+      setAvoidAllAction(true);
+      setTimeout(() => {
+        !isFlipFirstCard && handleCardResult(idx, isMatchFlip);
+        setAvoidAllAction(false);
+      }, 1000);
+    } 
+  }
+
+  const handleCardOpen = (idx: number) => {
     setCardList((prev) => {
       return prev.map((prevItem, prevIdx) => {
         if (idx !== prevIdx) return prevItem;
         return {...prevItem, isOpen: true};
       });
     })
-    openingCard.current = char;
   }
 
-  const handleSecondCardFlip = (idx: number, char: string) => {
-    const isMatchFlip = char === openingCard.current;
-
+  const handleCardResult = (idx: number, isMatchFlip: boolean) => {
     setCardList((prev) => {
       return prev.map((prevItem, prevIdx) => {
         if (idx !== prevIdx) {
@@ -41,8 +50,6 @@ export default function CardFlip(): JSX.Element {
         return {...prevItem, isOpen: false, isMatch: isMatchFlip};
       });
     })
-
-    openingCard.current = '';
   }
 
   useEffect(() => {
@@ -64,6 +71,7 @@ export default function CardFlip(): JSX.Element {
           idx={idx}
           isOpen={card.isOpen}
           isMatch={card.isMatch}
+          avoidAllAction={avoidAllAction}
           char={card.char}
           handleCardClick={handleCardClick}
         />

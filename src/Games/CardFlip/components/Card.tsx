@@ -4,16 +4,17 @@ type TCard = {
   idx: number;
   isOpen: boolean;
   isMatch: boolean;
+  avoidAllAction: boolean;
   char: string;
   handleCardClick: (idx: number, char: string) => void;
 }
 
 const Card = (props: TCard) => {
-  const { idx, isOpen, isMatch, char, handleCardClick } = props;
+  const { idx, isOpen, isMatch, avoidAllAction, char, handleCardClick } = props;
 
   return (
     <CardStyle.CardContainer isOpen={isOpen || isMatch}>
-      <CardStyle.CardBody onClick={() => (!isOpen && !isMatch) && handleCardClick(idx, char)}>
+      <CardStyle.CardBody onClick={() => (!avoidAllAction && !isOpen && !isMatch) && handleCardClick(idx, char)}>
         <CardStyle.CardBack>?</CardStyle.CardBack>
         <CardStyle.CardFront>{char}</CardStyle.CardFront>
       </CardStyle.CardBody>
