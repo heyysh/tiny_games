@@ -20,34 +20,37 @@ export default function CardFlip(): JSX.Element {
     const isMatchFlip = char === openingCard.current;
     openingCard.current = openingCard.current ? '' : char;
 
-    handleCardOpen(idx);
-      
+    handleCardOpen(idx, isMatchFlip);
+
     if (!isFlipFirstCard) {
       setAvoidAllAction(true);
       setTimeout(() => {
-        !isFlipFirstCard && handleCardResult(idx, isMatchFlip);
+        !isFlipFirstCard && handleCardResult(idx);
         setAvoidAllAction(false);
       }, 1000);
     } 
   }
 
-  const handleCardOpen = (idx: number) => {
-    setCardList((prev) => {
-      return prev.map((prevItem, prevIdx) => {
-        if (idx !== prevIdx) return prevItem;
-        return {...prevItem, isOpen: true};
-      });
-    })
-  }
-
-  const handleCardResult = (idx: number, isMatchFlip: boolean) => {
+  const handleCardOpen = (idx: number, isMatchFlip: boolean) => {
     setCardList((prev) => {
       return prev.map((prevItem, prevIdx) => {
         if (idx !== prevIdx) {
           if (!prevItem.isOpen) return prevItem;
-          return {...prevItem, isOpen: false, isMatch: isMatchFlip};
+          return {...prevItem, isOpen: true, isMatch: isMatchFlip};
         }
-        return {...prevItem, isOpen: false, isMatch: isMatchFlip};
+        return {...prevItem, isOpen: true, isMatch: isMatchFlip};
+      });
+    })
+  }
+
+  const handleCardResult = (idx: number) => {
+    setCardList((prev) => {
+      return prev.map((prevItem, prevIdx) => {
+        if (idx !== prevIdx) {
+          if (!prevItem.isOpen) return prevItem;
+          return {...prevItem, isOpen: false};
+        }
+        return {...prevItem, isOpen: false};
       });
     })
   }
@@ -61,8 +64,6 @@ export default function CardFlip(): JSX.Element {
     setCardList(initCardList);
   }, []);
 
-  console.log(cardList);
-  console.log(openingCard.current);
   return (
     <CardFlipStyle.Playground>
       {cardList.map((card, idx) =>

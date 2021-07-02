@@ -1,19 +1,21 @@
 import styled from 'styled-components';
 
-type TContainerProps = {
+type TCardStyleProps = {
   isOpen: boolean;
+  isMatch: boolean;
 }
 
-const CardContainer = styled.div<TContainerProps>`
+const CardContainer = styled.div<TCardStyleProps>`
   width: 150px;
   height: 175px;
   margin-top: 10px;
   perspective: 1000px;
-  cursor: ${props => !props.isOpen && 'pointer'};
+  cursor: ${props => (!props.isOpen || !props.isMatch) && 'pointer'};
   & > div {
-    transform: ${props => props.isOpen && 'rotateY(180deg)'};
+    transform: ${props => (props.isOpen || props.isMatch) && 'rotateY(180deg)'};
   }
 `
+
 const CardBody = styled.div`
   position: relative;
   width: 100%;
@@ -40,10 +42,12 @@ const CardBack = styled(CardBasic)`
   font-size: 84px;
 `;
 
-const CardFront = styled(CardBasic)`
+const CardFront = styled(CardBasic)<TCardStyleProps>`
   background-color: lightseagreen;
   font-size: 72px;
   transform: rotateY(180deg);
+  box-shadow: ${props => (props.isOpen && props.isMatch) ? 'inset 0px 0px 30px 15px #67ebe4' : 'none'};
+  transition: box-shadow 0.8s;
 `;
 
 export { CardContainer, CardBody, CardBack, CardFront };
