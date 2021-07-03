@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import * as CardFlipStyle from './style';
 import Card from './components/Card';
+import Sidebar from './components/Sidebar';
 import { getRandomPairCardList } from './helpers';
 
 type TCardListState = {
@@ -65,18 +66,21 @@ export default function CardFlip(): JSX.Element {
   }, []);
 
   return (
-    <CardFlipStyle.Playground>
-      {cardList.map((card, idx) =>
-        <Card
-          key={`${card.char}_${idx}`}
-          idx={idx}
-          isOpen={card.isOpen}
-          isMatch={card.isMatch}
-          avoidAllAction={avoidAllAction}
-          char={card.char}
-          handleCardClick={handleCardClick}
-        />
-      )}
-    </CardFlipStyle.Playground>
+    <CardFlipStyle.Main>
+      <Sidebar />
+      <CardFlipStyle.Playground>
+        {cardList.map((card, idx) =>
+          <Card
+            key={`${card.char}_${idx}`}
+            idx={idx}
+            isOpen={card.isOpen}
+            isMatch={card.isMatch}
+            avoidAllAction={avoidAllAction}
+            char={card.char}
+            handleCardClick={handleCardClick}
+          />
+        )}
+      </CardFlipStyle.Playground>
+    </CardFlipStyle.Main>
   );
 }
