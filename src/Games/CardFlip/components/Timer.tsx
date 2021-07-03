@@ -25,9 +25,7 @@ const Timer = (props: TTimerProps) => {
 
   return (
     <TimerStyle.TimerContainer>
-      <TimerStyle.MinuteAndSecond>
-        {timerFormatter(timeCounter)}
-      </TimerStyle.MinuteAndSecond>
+      {timerFormatter(timeCounter)}
     </TimerStyle.TimerContainer>
   )
 }
