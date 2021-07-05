@@ -3,25 +3,25 @@ import * as TimerStyle from './TimerStyle';
 import { timerFormatter } from './helpers';
 
 type TTimerProps = {
-  limit: number;
+  timeLimit: number;
   isInterrupt: boolean;
-  cb: (timeCounter: number) => void;
+  cb: (timeCounter: number, isReachTimeLimit: boolean) => void;
 }
 
 const Timer = (props: TTimerProps) => {
-  const { limit, isInterrupt, cb }= props;
+  const { timeLimit, isInterrupt, cb }= props;
   const [timeCounter, setTimeCounter] = useState(0);
 
   useEffect(() => {
-    if (timeCounter >= limit || isInterrupt) {
-      cb(timeCounter);
+    if (timeCounter >= timeLimit || isInterrupt) {
+      cb(timeCounter, !isInterrupt);
     } else {
       const counterId = setInterval(() => {
         setTimeCounter(timeCounter + 1);
       }, 1000);
       return () => clearInterval(counterId);
     }
-  }, [timeCounter, limit, isInterrupt, cb])
+  }, [timeCounter, timeLimit, isInterrupt, cb])
 
   return (
     <TimerStyle.TimerContainer>

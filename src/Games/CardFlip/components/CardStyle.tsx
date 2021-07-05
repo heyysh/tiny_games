@@ -8,7 +8,7 @@ type TCardStyleProps = {
 const CardContainer = styled.div<TCardStyleProps>`
   width: 150px;
   height: 175px;
-  margin-top: 10px;
+  margin: 5px;
   perspective: 1000px;
   cursor: ${props => (!props.isOpen || !props.isMatch) && 'pointer'};
   & > div {

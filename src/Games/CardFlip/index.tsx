@@ -14,8 +14,8 @@ export default function CardFlip(): JSX.Element {
   const pairNum = 6;
   const [cardList, setCardList] = useState<TCardListState[]>([]);
   const openingCard = useRef('');
-  const [avoidAllAction, setAvoidAllAction] = useState<boolean>(false);
-
+  const [avoidAllAction, setAvoidAllAction] = useState<boolean>(true);
+  
   const handleCardClick = (idx: number, char: string) => {
     const isFlipFirstCard = openingCard.current === '';
     const isMatchFlip = char === openingCard.current;
@@ -31,7 +31,7 @@ export default function CardFlip(): JSX.Element {
       }, 1000);
     } 
   }
-
+  
   const handleCardOpen = (idx: number, isMatchFlip: boolean) => {
     setCardList((prev) => {
       return prev.map((prevItem, prevIdx) => {
@@ -67,7 +67,7 @@ export default function CardFlip(): JSX.Element {
 
   return (
     <CardFlipStyle.Main>
-      <Sidebar />
+      <Sidebar setAvoidAllAction={setAvoidAllAction} />
       <CardFlipStyle.Playground>
         {cardList.map((card, idx) =>
           <Card
