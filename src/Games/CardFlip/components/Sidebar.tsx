@@ -6,10 +6,11 @@ import { timerFormatter } from './helpers';
 type TSidebarProps = {
   isPlaying: boolean;
   setIsPlaying: (isPlaying: boolean) => void;
+  isGameSet: boolean;
 }
 
 const Sidebar = (props: TSidebarProps) => {
-  const { isPlaying, setIsPlaying } = props;
+  const { isPlaying, isGameSet, setIsPlaying } = props;
   // const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [lastTimeConsuming, setLastTimeConsuming] = useState<number>(0);
 
@@ -28,7 +29,7 @@ const Sidebar = (props: TSidebarProps) => {
         Click To Start Game
       </SidebarStyle.StartButton>
       {isPlaying
-        ? <Timer timeLimit={10} isInterrupt={false} cb={handleTimerResult} />
+        ? <Timer timeLimit={120} isInterrupt={isGameSet} cb={handleTimerResult} />
         : timerFormatter(lastTimeConsuming)
       }
     </SidebarStyle.Main>

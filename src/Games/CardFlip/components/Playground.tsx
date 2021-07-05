@@ -5,6 +5,7 @@ import { getRandomPairCardList } from './helpers';
 
 type TPlaygroundProps = {
   isPlaying: boolean;
+  setIsGameSet: (isGameSet: boolean) => void;
 }
 
 type TCardListState = {
@@ -14,11 +15,11 @@ type TCardListState = {
 }
 
 export default function Playground(props: TPlaygroundProps): JSX.Element {
-  const { isPlaying } = props;
+  const { isPlaying, setIsGameSet } = props;
   const pairNum = 3;
   const [cardList, setCardList] = useState<TCardListState[]>([]);
   const openingCard = useRef('');
-  const matchedCardCount = useRef(0);
+  const [matchedCardCount, setMatchedCardCount] = useState<number>(0);
   const [pauseInteraction, setPauseInteraction] = useState<boolean>(false);
 
   const handleCardClick = (idx: number, char: string) => {
@@ -27,7 +28,7 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
     openingCard.current = openingCard.current ? '' : char;
 
     handleCardOpen(idx, isMatchFlip);
-    if (isMatchFlip) matchedCardCount.current++;
+    if (isMatchFlip) setMatchedCardCount((prev)=>  prev + 1);
     if (!isFlipFirstCard) {
       setPauseInteraction(true);
       setTimeout(() => {
@@ -69,6 +70,10 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
     }));
     setCardList(initCardList);
   }, []);
+
+  useEffect(()=> {
+    if(pairNum === matchedCardCount) setIsGameSet(true); 
+  }, [setIsGameSet, matchedCardCount])
 
   return (
     <PlaygroundStyle.Playground>
