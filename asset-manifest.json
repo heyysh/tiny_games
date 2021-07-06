@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/tiny_games/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/tiny_games/static/js/main.4fd897c2.chunk.js",
-    "main.js.map": "/tiny_games/static/js/main.4fd897c2.chunk.js.map",
+    "main.js": "/tiny_games/static/js/main.b60f36f6.chunk.js",
+    "main.js.map": "/tiny_games/static/js/main.b60f36f6.chunk.js.map",
     "runtime-main.js": "/tiny_games/static/js/runtime-main.3f132e35.js",
     "runtime-main.js.map": "/tiny_games/static/js/runtime-main.3f132e35.js.map",
-    "static/js/2.bf564eef.chunk.js": "/tiny_games/static/js/2.bf564eef.chunk.js",
-    "static/js/2.bf564eef.chunk.js.map": "/tiny_games/static/js/2.bf564eef.chunk.js.map",
+    "static/js/2.a49be204.chunk.js": "/tiny_games/static/js/2.a49be204.chunk.js",
+    "static/js/2.a49be204.chunk.js.map": "/tiny_games/static/js/2.a49be204.chunk.js.map",
     "index.html": "/tiny_games/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/tiny_games/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.bf564eef.chunk.js.LICENSE.txt": "/tiny_games/static/js/2.bf564eef.chunk.js.LICENSE.txt"
+    "static/js/2.a49be204.chunk.js.LICENSE.txt": "/tiny_games/static/js/2.a49be204.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.3f132e35.js",
-    "static/js/2.bf564eef.chunk.js",
+    "static/js/2.a49be204.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.4fd897c2.chunk.js"
+    "static/js/main.b60f36f6.chunk.js"
   ]
 }
