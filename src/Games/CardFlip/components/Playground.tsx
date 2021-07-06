@@ -63,13 +63,28 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
   }
 
   useEffect(() => {
-    const initCardList = getRandomPairCardList(pairNum).map((itm) => ({
-      char: itm,
-      isOpen: false,
-      isMatch: false
-    }));
-    setCardList(initCardList);
+    const preRenderCardList: TCardListState[] = [];
+    for(let i = 0; i < pairNum * 2; i++) {
+      preRenderCardList.push({
+        char: 'Pre',
+        isOpen: false,
+        isMatch: false
+      });
+    }
+    setCardList(preRenderCardList);
   }, []);
+
+  useEffect(() => {
+    if (isPlaying) {
+      const initCardList = getRandomPairCardList(pairNum).map((itm) => ({
+        char: itm,
+        isOpen: false,
+        isMatch: false
+      }));
+      setCardList(initCardList);
+      setMatchedCardCount(0);
+    }
+  }, [isPlaying]);
 
   useEffect(()=> {
     if(pairNum === matchedCardCount) setIsGameSet(true); 
