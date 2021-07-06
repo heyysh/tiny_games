@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react';
-import * as TimerStyle from './TimerStyle';
 import { timerFormatter } from './helpers';
 
 type TTimerProps = {
   timeLimit: number;
   isInterrupt: boolean;
-  cb: (timeCounter: number, isReachTimeLimit: boolean) => void;
+  cb: (time: number, isReachTimeLimit: boolean) => void;
 }
 
 const Timer = (props: TTimerProps) => {
@@ -13,8 +12,9 @@ const Timer = (props: TTimerProps) => {
   const [timeCounter, setTimeCounter] = useState(0);
 
   useEffect(() => {
-    if (timeCounter >= timeLimit || isInterrupt) {
-      cb(timeCounter, !isInterrupt);
+    const isReachTimeLimit = timeCounter > timeLimit;
+    if (isReachTimeLimit || isInterrupt) {
+      cb(timeCounter, isReachTimeLimit);
     } else {
       const counterId = setInterval(() => {
         setTimeCounter(timeCounter + 1);
@@ -24,9 +24,9 @@ const Timer = (props: TTimerProps) => {
   }, [timeCounter, timeLimit, isInterrupt, cb])
 
   return (
-    <TimerStyle.TimerContainer>
+    <>
       {timerFormatter(timeCounter)}
-    </TimerStyle.TimerContainer>
+    </>
   )
 }
 
