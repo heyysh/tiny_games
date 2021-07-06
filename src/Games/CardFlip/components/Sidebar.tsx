@@ -9,29 +9,53 @@ type TSidebarProps = {
   isGameSet: boolean;
 }
 
+type TLastTenRecords = {
+  time: string;
+  isReachTimeLimit: boolean;
+}
+
 const Sidebar = (props: TSidebarProps) => {
   const { isPlaying, isGameSet, setIsPlaying } = props;
-  // const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [lastTimeConsuming, setLastTimeConsuming] = useState<number>(0);
+  const [lastTenRecords, setLastTenRecords] = useState<TLastTenRecords[]>([]);
 
-  const handleStartPlaying = () => {
+  const handleStartPlaying = (): void => {
     setIsPlaying(true);
   }
 
-  const handleTimerResult = (timeConsuming: number, isReachTimeLimit: boolean) => {
-    setLastTimeConsuming(timeConsuming);
+  const handleTimerResult = (timeConsuming: number, isReachTimeLimit: boolean): void => {
+    setLastTenRecords((prev) => {
+      const newRecords = [{
+        time: timerFormatter(timeConsuming),
+        isReachTimeLimit
+      }, ...prev];
+      if (newRecords.length > 10) newRecords.pop();
+      return newRecords;
+    });
     setIsPlaying(false);
   }
 
   return (
     <SidebarStyle.Main>
-      <SidebarStyle.StartButton onClick={() => handleStartPlaying()}>
-        Click To Start Game
+      <SidebarStyle.StartButton
+        isPlaying={isPlaying}
+        onClick={() => !isPlaying && handleStartPlaying()}
+      >
+        {isPlaying
+          ? <Timer timeLimit={120} isInterrupt={isGameSet} cb={handleTimerResult} />
+          : 'START'
+        }
       </SidebarStyle.StartButton>
-      {isPlaying
-        ? <Timer timeLimit={120} isInterrupt={isGameSet} cb={handleTimerResult} />
-        : timerFormatter(lastTimeConsuming)
-      }
+      <SidebarStyle.RecordsContainer>
+        <SidebarStyle.Title>Time limit: 2 mins</SidebarStyle.Title>
+        <SidebarStyle.Title>Last 10 records:</SidebarStyle.Title>
+        <ul>
+          {lastTenRecords.map((item, idx) => {
+            return item.isReachTimeLimit
+              ? <SidebarStyle.RecordTimeout key={`${item}_${idx}`}>Timeout</SidebarStyle.RecordTimeout>
+              : <SidebarStyle.Record key={`${item}_${idx}`}>{item.time}</SidebarStyle.Record>
+          })}
+        </ul>
+      </SidebarStyle.RecordsContainer> 
     </SidebarStyle.Main>
   )
 }
