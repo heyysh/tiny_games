@@ -16,13 +16,13 @@ type TCardListState = {
 
 export default function Playground(props: TPlaygroundProps): JSX.Element {
   const { isPlaying, setIsGameSet } = props;
-  const pairNum = 3;
+  const pairNum = 9;
   const [cardList, setCardList] = useState<TCardListState[]>([]);
   const openingCard = useRef('');
   const [matchedCardCount, setMatchedCardCount] = useState<number>(0);
   const [pauseInteraction, setPauseInteraction] = useState<boolean>(false);
 
-  const handleCardClick = (idx: number, char: string) => {
+  const handleCardClick = (idx: number, char: string): void => {
     const isFlipFirstCard = openingCard.current === '';
     const isMatchFlip = char === openingCard.current;
     openingCard.current = openingCard.current ? '' : char;
@@ -38,7 +38,7 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
     } 
   }
   
-  const handleCardOpen = (idx: number, isMatchFlip: boolean) => {
+  const handleCardOpen = (idx: number, isMatchFlip: boolean): void => {
     setCardList((prev) => {
       return prev.map((prevItem, prevIdx) => {
         if (idx !== prevIdx) {
@@ -50,7 +50,7 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
     })
   }
 
-  const handleCardResult = (idx: number) => {
+  const handleCardResult = (idx: number): void => {
     setCardList((prev) => {
       return prev.map((prevItem, prevIdx) => {
         if (idx !== prevIdx) {
