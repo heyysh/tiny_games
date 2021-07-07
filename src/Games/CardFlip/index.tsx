@@ -12,7 +12,7 @@ export default function CardFlip(): JSX.Element {
   }, [isPlaying, isGameSet]);
 
   return (
-    <CardFlipStyle.Main>
+    <CardFlipStyle.Main data-testid="card-flip-main">
       <Sidebar
         isPlaying={isPlaying}
         setIsPlaying={setIsPlaying}

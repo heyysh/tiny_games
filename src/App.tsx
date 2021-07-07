@@ -1,19 +1,27 @@
 import {
-  HashRouter as Router,
+  HashRouter,
   Switch,
-  Route
+  Route,
+  Redirect
 } from "react-router-dom";
 import CardFlip from './Games/CardFlip';
 
+export const Routes = (): JSX.Element => (
+  <Switch>
+    <Route exact path="/card-flip" component={CardFlip} />
+    <Route exact path="/maze" component={Maze} />
+    <Route path="/">
+      <Redirect to="/card-flip" />
+    </Route>
+
+  </Switch>
+)
+
 function App() {
   return (
-    <Router>
-      <Switch>
-        <Route path="/card-flip" component={CardFlip} />
-        <Route path="/maze" component={Maze} />
-        <Route path="/" component={CardFlip} />
-      </Switch>
-    </Router>
+    <HashRouter>
+      <Routes />
+    </HashRouter>
   );
 }
 
