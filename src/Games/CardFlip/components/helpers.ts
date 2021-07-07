@@ -5,7 +5,7 @@ export const getRandomPairCardList = (pairNum: number): string[] => {
   return shuffledRandomCards;
 }
 
-const getRandomPairCards = (pairNum: number): string[] => {
+export const getRandomPairCards = (pairNum: number): string[] => {
   if (pairNum > 26) return [];
   let randomCardIndices: number[] = [];
   for (let i = 0; i < pairNum; i++) {
@@ -16,7 +16,7 @@ const getRandomPairCards = (pairNum: number): string[] => {
   return randomCardIndices.map(item => String.fromCharCode(item + 65));
 }
 
-const arrayShuffle = <T>(arr: T[]): T[] => {
+export const arrayShuffle = <T>(arr: T[]): T[] => {
   let i = arr.length;
   while (--i) {
       let j = Math.floor(Math.random() * (i + 1));
