@@ -1,6 +1,6 @@
 import * as CardStyle from './CardStyle';
 
-type TCard = {
+export type TCardProps = {
   idx: number;
   isOpen: boolean;
   isMatch: boolean;
@@ -9,7 +9,7 @@ type TCard = {
   handleCardClick: (idx: number, char: string) => void;
 }
 
-const Card = (props: TCard) => {
+const Card = (props: TCardProps) => {
   const { idx, isOpen, isMatch, pauseInteraction, char, handleCardClick } = props;
 
   return (

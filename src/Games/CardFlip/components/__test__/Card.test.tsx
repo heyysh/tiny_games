@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Card from "../Card";
+import Card, { TCardProps } from "../Card";
 
 const props = {
   idx: 0,
@@ -17,46 +17,28 @@ test('Card back and front should be rendered', () => {
 })
 
 test('Card callback should be triggered by click', () => {
-  const { getByTestId } = render(<Card {...props} />);
+  render(<Card {...props} />);
 
-  fireEvent.click(getByTestId('card-body'));
+  fireEvent.click(screen.getByTestId('card-body'));
 
   expect(props.handleCardClick).toBeCalledTimes(1);
   expect(props.handleCardClick).toHaveBeenCalledWith(0, 'A');
 })
 
+const cbNotTriggeredWithSpecificProps = (props: TCardProps) => {
+  render(<Card {...props} />);
+  fireEvent.click(screen.getByTestId('card-body'));
+  expect(props.handleCardClick).toBeCalledTimes(0);
+}
+
 test('Card callback should not be triggered if isOpen is true', () => {
-  const newProps = {
-    ...props,
-    isOpen: true
-  }
-  const { getByTestId } = render(<Card {...newProps} />);
-
-  fireEvent.click(getByTestId('card-body'));
-
-  expect(newProps.handleCardClick).toBeCalledTimes(0);
+  cbNotTriggeredWithSpecificProps({...props, isOpen: true});
 })
 
 test('Card callback should not be triggered if isMatch is true', () => {
-  const newProps = {
-    ...props,
-    isMatch: true
-  }
-  const { getByTestId } = render(<Card {...newProps} />);
-
-  fireEvent.click(getByTestId('card-body'));
-
-  expect(newProps.handleCardClick).toBeCalledTimes(0);
+  cbNotTriggeredWithSpecificProps({...props, isMatch: true});
 })
 
 test('Card callback should not be triggered if pauseInteraction is true', () => {
-  const newProps = {
-    ...props,
-    pauseInteraction: true
-  }
-  const { getByTestId } = render(<Card {...newProps} />);
-
-  fireEvent.click(getByTestId('card-body'));
-
-  expect(newProps.handleCardClick).toBeCalledTimes(0);
+  cbNotTriggeredWithSpecificProps({...props, pauseInteraction: true});
 })
