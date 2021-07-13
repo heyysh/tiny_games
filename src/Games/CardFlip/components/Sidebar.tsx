@@ -1,38 +1,39 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as SidebarStyle from './SidebarStyle';
-import Timer from './Timer';
 import { timerFormatter } from './helpers';
+import useTimer from '../hooks/useTimer';
 
 type TSidebarProps = {
   isPlaying: boolean;
-  setIsPlaying: (isPlaying: boolean) => void;
+  setGameStart: () => void;
   isGameSet: boolean;
-}
-
-type TLastTenRecords = {
-  time: string;
-  isReachTimeLimit: boolean;
+  setGameSet: () => void;
 }
 
 const Sidebar = (props: TSidebarProps) => {
-  const { isPlaying, isGameSet, setIsPlaying } = props;
-  const [lastTenRecords, setLastTenRecords] = useState<TLastTenRecords[]>([]);
+  const { isPlaying, isGameSet, setGameStart, setGameSet } = props;
+  const timeLimit = 120;
+  const [lastTenRecords, setLastTenRecords] = useState<number[]>([]);
+  const [timer, startTimer] = useTimer(timeLimit, isPlaying);
 
   const handleStartPlaying = (): void => {
-    setIsPlaying(true);
+    setGameStart();
+    startTimer();
   }
 
-  const handleTimerResult = (timeConsuming: number, isReachTimeLimit: boolean): void => {
-    setLastTenRecords((prev) => {
-      const newRecords = [{
-        time: timerFormatter(timeConsuming),
-        isReachTimeLimit
-      }, ...prev];
-      if (newRecords.length > 10) newRecords.pop();
-      return newRecords;
-    });
-    setIsPlaying(false);
-  }
+  useEffect(() => {
+    if(isGameSet) {
+      setLastTenRecords((prev) => {
+        const newRecords = [timer, ...prev];
+        if (newRecords.length > 10) newRecords.pop();
+        return newRecords;
+      });
+    }
+  }, [isGameSet, timer])
+
+  useEffect(() => {
+    timer === -1 && setGameSet();
+  }, [timer, setGameSet])
 
   return (
     <SidebarStyle.Main>
@@ -41,8 +42,8 @@ const Sidebar = (props: TSidebarProps) => {
         onClick={() => !isPlaying && handleStartPlaying()}
       >
         {isPlaying
-          ? <Timer timeLimit={120} isInterrupt={isGameSet} cb={handleTimerResult} />
-          : 'START'
+          ? <div>{timerFormatter(timer)}</div>
+          : <div>START</div>
         }
       </SidebarStyle.StartButton>
       <SidebarStyle.RecordsContainer>
@@ -50,9 +51,9 @@ const Sidebar = (props: TSidebarProps) => {
         <SidebarStyle.Title>Last 10 records:</SidebarStyle.Title>
         <ul>
           {lastTenRecords.map((item, idx) => {
-            return item.isReachTimeLimit
+            return item === -1
               ? <SidebarStyle.RecordTimeout key={`${item}_${idx}`}>Timeout</SidebarStyle.RecordTimeout>
-              : <SidebarStyle.Record key={`${item}_${idx}`}>{item.time}</SidebarStyle.Record>
+              : <SidebarStyle.Record key={`${item}_${idx}`}>{timerFormatter(item)}</SidebarStyle.Record>
           })}
         </ul>
       </SidebarStyle.RecordsContainer> 
@@ -60,4 +61,4 @@ const Sidebar = (props: TSidebarProps) => {
   )
 }
 
-export default React.memo(Sidebar);
+export default Sidebar;

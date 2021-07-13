@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import * as CardFlipStyle from './style';
 import Playground from './components/Playground';
 import Sidebar from './components/Sidebar';
@@ -7,20 +7,27 @@ export default function CardFlip(): JSX.Element {
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [isGameSet, setIsGameSet] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!isPlaying && isGameSet) setIsGameSet(false);
-  }, [isPlaying, isGameSet]);
+  const setGameStart = (): void => {
+    setIsPlaying(true);
+    setIsGameSet(false);
+  }
+
+  const setGameSet = (): void => {
+    setIsGameSet(true);
+    setIsPlaying(false);
+  }
 
   return (
     <CardFlipStyle.Main data-testid="card-flip-main">
       <Sidebar
         isPlaying={isPlaying}
-        setIsPlaying={setIsPlaying}
+        setGameStart={setGameStart}
+        setGameSet={setGameSet}
         isGameSet={isGameSet}
       />
       <Playground
         isPlaying={isPlaying}
-        setIsGameSet={setIsGameSet}
+        setGameSet={setGameSet}
       />
     </CardFlipStyle.Main>
   );
