@@ -7,7 +7,6 @@ const useTimer = (timeLimit: number, isRunning: boolean) => {
    
   useEffect(() => {  
     if (isRunning && timeLimit >= timer && timer >= 0) {
-      console.log('KKK', timer);
       const counterId = setInterval(() => {
         (timeLimit === timer) ? setTimer(-1) : setTimer(timer + 1);
       }, 1000);
