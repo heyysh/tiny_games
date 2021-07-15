@@ -13,7 +13,11 @@ const Card = (props: TCardProps) => {
   const { idx, isOpen, isMatch, pauseInteraction, char, handleCardClick } = props;
 
   return (
-    <CardStyle.CardContainer isOpen={isOpen} isMatch={isMatch}>
+    <CardStyle.CardContainer
+      isOpen={isOpen}
+      isMatch={isMatch}
+      data-testid={(isOpen || isMatch) ? 'card-front' : 'card-back'}
+    >
       <CardStyle.CardBody
         data-testid="card-body"
         onClick={() => (!pauseInteraction && !isOpen && !isMatch) && handleCardClick(idx, char)}

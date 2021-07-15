@@ -6,6 +6,7 @@ import { getRandomPairCardList } from './helpers';
 type TPlaygroundProps = {
   isPlaying: boolean;
   setGameSet: () => void;
+  pairNum : number;
 }
 
 type TCardListState = {
@@ -15,8 +16,7 @@ type TCardListState = {
 }
 
 export default function Playground(props: TPlaygroundProps): JSX.Element {
-  const { isPlaying, setGameSet } = props;
-  const pairNum = 9;
+  const { isPlaying, setGameSet, pairNum } = props;
   const [cardList, setCardList] = useState<TCardListState[]>([]);
   const openingCard = useRef('');
   const [matchedCardCount, setMatchedCardCount] = useState<number>(0);
@@ -72,7 +72,7 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
       });
     }
     setCardList(preRenderCardList);
-  }, []);
+  }, [pairNum]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -84,14 +84,14 @@ export default function Playground(props: TPlaygroundProps): JSX.Element {
       setCardList(initCardList);
       
     }
-  }, [isPlaying]);
+  }, [isPlaying, pairNum]);
 
   useEffect(()=> {
     if(pairNum === matchedCardCount) {
       setGameSet();
       setMatchedCardCount(0);
     } 
-  }, [setGameSet, matchedCardCount])
+  }, [setGameSet, matchedCardCount, pairNum])
 
   return (
     <PlaygroundStyle.Playground>

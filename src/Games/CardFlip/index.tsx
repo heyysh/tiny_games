@@ -28,6 +28,7 @@ export default function CardFlip(): JSX.Element {
       <Playground
         isPlaying={isPlaying}
         setGameSet={setGameSet}
+        pairNum={9}
       />
     </CardFlipStyle.Main>
   );
