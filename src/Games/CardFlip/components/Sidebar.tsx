@@ -38,6 +38,7 @@ const Sidebar = (props: TSidebarProps) => {
   return (
     <SidebarStyle.Main>
       <SidebarStyle.StartButton
+        data-testid="start-button"
         isPlaying={isPlaying}
         onClick={() => !isPlaying && handleStartPlaying()}
       >
