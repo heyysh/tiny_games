@@ -1,6 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom';
-import { Routes } from './App';
+import App, { Routes } from './App';
+
+test('App', () => {
+  render(<App />);
+  expect(screen.getByTestId('card-flip-main')).toBeInTheDocument();
+})
 
 test('CardFlip should be rendered correctly with exact path', () => {
   render(
